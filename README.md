@@ -1,6 +1,6 @@
-# 🎯 Internship Deck — Free & User-Friendly Gmail Deadline Tracker
+# 🎯 Intern Deck — Smart Gmail Internship Deadline & Eligibility Tracker
 
-> **Internship Deck** is a 100% free, privacy-first Chrome Extension (Manifest V3) that tracks internship opportunities & application deadlines from your Gmail inbox with **Zero Mandatory Cloud Setup**, native desktop push notifications, a full **Glassmorphism Kanban Dashboard**, and **1-Click Calendar Sync**.
+> **Intern Deck** is a 100% free, privacy-first Chrome Extension (Manifest V3) that tracks internship opportunities, application deadlines, CGPA cutoffs, and eligibility criteria from your Gmail inbox with **Zero Mandatory Cloud Setup**, instant desktop push notifications, a full **Glassmorphism Kanban Dashboard**, and **1-Click Calendar Sync**.
 
 Inspired by the user-friendly design of **Tab Deck**.
 
@@ -8,9 +8,10 @@ Inspired by the user-friendly design of **Tab Deck**.
 
 ## ✨ What Makes It Free & User-Friendly?
 
-| Feature | Standard Complex API Extensions | 🎯 Internship Deck (Our Approach) |
+| Feature | Standard Complex API Extensions | 🎯 Intern Deck (Our Approach) |
 |---|---|---|
 | **Setup Barrier** | Requires Google Cloud project, OAuth consent screens, test users, and client IDs | **⚡ Zero-Setup Mode**: Works instantly with your open Gmail tab! No Google Cloud needed. |
+| **All-in-One Notifications** | Just generic subject line | **🎓 Instant Details**: Company name, exact deadline, and CGPA/eligibility directly in the push alert! |
 | **Pricing** | Subscription / Paid API keys | **100% Free Forever & Open-Source** |
 | **Interface** | Tiny cramped popup | **Full Screen Glassmorphism Dashboard** (`dashboard.html`) + Compact Popup |
 | **Calendar Sync** | Complex Google API permissions | **1-Click `.ics` Export & Direct Google Calendar Link** |
@@ -24,6 +25,7 @@ Inspired by the user-friendly design of **Tab Deck**.
 
 ### 1. ⚡ Zero-Setup Mode (Default — 100% Free & Instant)
 - Whenever you open `mail.google.com` in Chrome, the lightweight in-browser content script scans your unread rows and opened emails.
+- Extracts company name, role, deadline date, and eligibility criteria (CGPA, Batch, Branch, Backlog rules).
 - Shows a non-intrusive floating badge: `"🎯 3 Internship Deadlines Tracked"`.
 - Click **"Scan Open Gmail Tab"** in the popup or dashboard anytime for an instant scan.
 - **Zero API keys, zero Google Cloud setup, zero configuration.**
@@ -37,10 +39,10 @@ Inspired by the user-friendly design of **Tab Deck**.
 ## 📁 Project Structure
 
 ```
-internship-deadline-tracker/
+intern-deck/
 ├── manifest.json              # Manifest V3 configuration, permissions & options page
 ├── background.js              # Service worker (alarms, notifications, Gmail API, tab messaging)
-├── content.js                 # In-browser zero-setup Gmail scanner
+├── content.js                 # In-browser zero-setup Gmail scanner with CGPA parser
 ├── popup.html                 # Clean popup UI with quick scan & dashboard link
 ├── popup.js                   # Popup controller & storage sync
 ├── popup.css                  # Standalone Tailwind utility stylesheet
@@ -48,7 +50,7 @@ internship-deadline-tracker/
 ├── dashboard.js               # Urgency Kanban, search, calendar export & Web Audio chime
 ├── dashboard.css              # Dark/Light Glassmorphism design system
 ├── utils/
-│   └── extractor.js           # Multi-pattern regex & heuristic date/time extractor
+│   └── extractor.js           # Multi-pattern regex & heuristic date/time/CGPA extractor
 ├── icons/
 │   ├── icon16.png             # Extension toolbar icon (16x16)
 │   ├── icon48.png             # Chrome management icon (48x48)
@@ -62,10 +64,14 @@ internship-deadline-tracker/
 
 ## 🛠️ Quick Installation
 
-1. Open Google Chrome and go to `chrome://extensions/`.
-2. Toggle on **Developer mode** in the top-right corner.
-3. Click **Load unpacked** and select the [`internship-deadline-tracker`](file:///D:/VSCODE/internship-deadline-tracker/) directory.
-4. Pin the **Internship Deck** icon to your toolbar!
+1. Clone or download the repository:
+   ```bash
+   git clone https://github.com/kailash6207/intern-deck.git
+   ```
+2. Open Google Chrome and go to `chrome://extensions/`.
+3. Toggle on **Developer mode** in the top-right corner.
+4. Click **Load unpacked** and select the cloned directory.
+5. Pin the **Intern Deck** icon to your toolbar!
 
 ---
 
