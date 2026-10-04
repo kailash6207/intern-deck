@@ -77,15 +77,34 @@ intern-deck/
 
 ## 🎮 How to Use
 
-1. **Open the Dashboard**:
-   - Right-click the extension icon and select **Options**, or click the **"Dashboard ↗"** button in the popup.
-   - You'll see your interactive **Urgency Kanban** pre-loaded with sample opportunities so you can immediately see how it works!
-2. **Scan Your Real Gmail**:
-   - Open a tab with `mail.google.com`.
-   - Click **"Scan Open Gmail Tab"** in the popup or **"🔄 Scan Gmail"** in the dashboard.
-   - Any unread internship emails will be parsed and organized into your Kanban columns.
-3. **Sync with Calendar**:
-   - Click **"📅 Sync Calendar"** to download an `.ics` file compatible with Apple Calendar, Outlook, and Google Calendar.
-   - Or click **"📅 Cal"** on any card to create an event directly in Google Calendar in 1 click!
-4. **Mark as Applied**:
-   - Click **"✅ Mark Applied"** on any role card to move it to the Applied column and track your recruitment journey.
+### 1. Automatic Live Monitoring (Hands-Free)
+- Simply open and use Gmail (`mail.google.com`) as usual.
+- Whenever you receive or view an internship email with an application deadline:
+  - **Desktop Push Notification**: Instantly alerts you with the **Company Name**, **Deadline Date/Time**, and **Eligibility Criteria** (such as CGPA cutoff, Graduating Batch, and Branch).
+  - **In-Page Floating Banner**: Highlights key criteria directly inside the Gmail tab.
+  - You never even need to open the email to know if you're eligible!
+
+### 2. Manual Gmail Scan
+- Open your Gmail tab.
+- Click the **Intern Deck** toolbar icon and click **"Scan Open Gmail Tab"** (or click **"🔄 Scan Gmail"** in the dashboard).
+- Any detected opportunities will be parsed and organized into your Kanban columns.
+
+### 3. Open the Interactive Dashboard
+- Right-click the extension icon and select **Options**, or click the **"Dashboard ↗"** button in the popup.
+- View your opportunities across 3 layout views:
+  - **Kanban Board**: Color-coded by urgency — 🔴 Urgent (< 48h), 🟡 Approaching (< 7d), 🟢 Future, and ✅ Applied.
+  - **Timeline Schedule**: Chronological listing of upcoming deadlines.
+  - **Spreadsheet Table**: Sortable table with dedicated eligibility and CGPA columns.
+
+### 4. 1-Click Calendar Sync
+- Click **"📅 Cal"** on any opportunity card to open Google Calendar with pre-filled title, deadline, eligibility details, and application link.
+- Or click **"Export Calendar (.ics)"** to download an `.ics` file compatible with Apple Calendar, Outlook, and Google Calendar.
+
+### 5. Track Application Progress
+- Click **"✅ Mark Applied"** on any card to move it into your Applied/Interviewing column.
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE) — see the [`LICENSE`](LICENSE) file for details.
