@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Internship Deadline Tracker</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+
+  <!-- Top In-Popup Toast Alert Banner -->
+  <div id="toastBanner" class="toast-banner hidden">
+    <div class="toast-content">
+      <span id="toastIcon">🔔</span>
+      <span id="toastMsg">Test notification sent!</span>
+    </div>
+    <button id="toastClose" class="toast-close-btn" title="Dismiss">✕</button>
+  </div>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-brand">
+      <div class="header-logo">🎯</div>
+      <div>
+        <h1 class="header-title">Internship Tracker</h1>
+        <p class="header-sub">Gmail Deadline Monitor</p>
+      </div>
+    </div>
+    <div class="status-pill">
+      <span class="status-dot"></span>
+      <span id="headerStatusText">Active</span>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="app-main">
+
+    <!-- Action Buttons Row -->
+    <div class="actions-grid">
+      <button id="btnScanTab" class="btn-primary" title="Scan your open Gmail tab for internship deadlines">
+        <span class="btn-icon">⚡</span>
+        <span>Scan Gmail Tab</span>
+      </button>
+
+      <button id="btnTestNotification" class="btn-secondary" title="Test desktop push notification">
+        <span class="btn-icon">🔔</span>
+        <span>Test Alert</span>
+      </button>
+    </div>
+
+    <!-- No Gmail Tab Notice (Shown when user clicks scan without open Gmail) -->
+    <div id="noGmailBanner" class="notice-banner hidden">
+      <div class="notice-text">
+        <strong>⚠️ No Gmail tab found!</strong>
+        <p>Open Gmail in your browser to scan emails.</p>
+      </div>
+      <button id="btnOpenGmail" class="btn-small-primary">Open Gmail ↗</button>
+    </div>
+
+    <!-- Real-Time Monitoring Switch Card -->
+    <div class="card monitor-card">
+      <div class="monitor-info">
+        <strong class="card-label">Real-Time Tab Monitor</strong>
+        <p class="card-desc">Automatically scans and alerts when new emails arrive</p>
+      </div>
+      <!-- Pure CSS Bulletproof iOS Switch with State Badge -->
+      <div class="switch-wrapper">
+        <label class="ios-switch">
+          <input type="checkbox" id="monitoringToggle" checked>
+          <span class="ios-slider"></span>
+        </label>
+        <span id="toggleStateLabel" class="switch-status-label status-on">ON</span>
+      </div>
+    </div>
+
+    <!-- Search Keywords Card -->
+    <div class="card keywords-card">
+      <div class="card-header-row">
+        <strong class="card-label">Search Keywords</strong>
+        <span class="count-badge" id="keywordCount">3 keywords</span>
+      </div>
+
+      <form id="keywordForm" class="keyword-form">
+        <input 
+          type="text" 
+          id="keywordInput" 
+          placeholder="Add keyword (e.g. Fellowship, Co-op)"
+          class="keyword-input"
+          maxlength="40"
+        />
+        <button type="submit" class="btn-add-keyword">Add</button>
+      </form>
+
+      <div id="keywordChips" class="keyword-chips-container">
+        <!-- Keyword chips rendered dynamically -->
+      </div>
+    </div>
+
+    <!-- Tracked Opportunities Section -->
+    <div class="opportunities-section">
+      <div class="card-header-row">
+        <strong class="card-label">Tracked Opportunities (<span id="oppsCount">0</span>)</strong>
+        <button id="btnClearHistory" class="btn-text-danger" title="Clear all tracked items">Clear All</button>
+      </div>
+
+      <div id="alertsList" class="opportunities-list">
+        <!-- Dynamic list of opportunities with clear Red Delete buttons -->
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Clean Footer -->
+  <footer class="app-footer">
+    <span id="lastCheckedFooter">Last checked: Just now</span>
+    <span class="footer-badge">100% Free • Manifest V3</span>
+  </footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>

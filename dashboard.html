@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Internship Deck — Applications & Deadline Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body class="theme-light">
+
+  <!-- Ambient Glowing Background Wallpaper -->
+  <div class="wallpaper-layer"></div>
+  <div class="wallpaper-overlay"></div>
+
+  <!-- Dashboard Container -->
+  <div class="dashboard-wrapper">
+
+    <!-- Top Navigation Bar -->
+    <header class="top-bar glass-card">
+      <div class="top-left">
+        <div class="app-logo">🎯</div>
+        <div>
+          <h1 class="app-title">Internship Deck</h1>
+          <span class="app-subtitle">Smart Gmail Deadline Tracker & Application Hub</span>
+        </div>
+      </div>
+
+      <!-- Quick Search Bar -->
+      <div class="search-container">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" placeholder="Search internships, companies, deadlines (Press '/' to search)..." autocomplete="off">
+        <button id="clearSearchBtn" class="clear-btn" style="display: none;">✕</button>
+      </div>
+
+      <!-- Top Action Controls -->
+      <div class="top-actions">
+        <button class="glass-btn btn-primary" id="btnAddManual" title="Add an opportunity manually">
+          <span>➕</span>
+          <span>Add Opportunity</span>
+        </button>
+
+        <button class="glass-btn" id="btnScanNow" title="Scan open Gmail tabs for opportunities">
+          <span class="spin-icon">🔄</span>
+          <span>Scan Gmail</span>
+        </button>
+
+        <button class="glass-btn" id="btnExportIcs" title="Export all deadlines to Google / Apple Calendar (.ics)">
+          <span>📅</span>
+          <span>Sync Calendar</span>
+        </button>
+
+        <button class="glass-icon-btn" id="btnThemeToggle" title="Toggle Light/Dark Glass (Alt+T)">
+          🌓
+        </button>
+
+        <button class="glass-icon-btn" id="btnSettings" title="Settings & Preferences">
+          ⚙️
+        </button>
+      </div>
+    </header>
+
+    <!-- Metrics & Filter Bar -->
+    <section class="metrics-row">
+      <div class="metric-card glass-card">
+        <div class="metric-icon blue">💼</div>
+        <div class="metric-info">
+          <span class="metric-label">Tracked Roles</span>
+          <span class="metric-value" id="statTotal">0</span>
+        </div>
+      </div>
+
+      <div class="metric-card glass-card">
+        <div class="metric-icon red">⏳</div>
+        <div class="metric-info">
+          <span class="metric-label">Urgent (< 48 hrs)</span>
+          <span class="metric-value text-red" id="statUrgent">0</span>
+        </div>
+      </div>
+
+      <div class="metric-card glass-card">
+        <div class="metric-icon amber">📅</div>
+        <div class="metric-info">
+          <span class="metric-label">Upcoming This Week</span>
+          <span class="metric-value text-amber" id="statWeek">0</span>
+        </div>
+      </div>
+
+      <div class="metric-card glass-card">
+        <div class="metric-icon green">✅</div>
+        <div class="metric-info">
+          <span class="metric-label">Applied</span>
+          <span class="metric-value text-green" id="statApplied">0</span>
+        </div>
+      </div>
+
+      <div class="view-switch-card glass-card">
+        <button class="view-btn active" data-view="kanban" title="Urgency Kanban View">📌 Kanban</button>
+        <button class="view-btn" data-view="timeline" title="Timeline Calendar View">📅 Timeline</button>
+        <button class="view-btn" data-view="table" title="Detailed Spreadsheet View">📊 Table</button>
+      </div>
+    </section>
+
+    <!-- Main Content View -->
+    <main class="main-content" id="mainContent">
+
+      <!-- View 1: Kanban Columns -->
+      <div class="kanban-view" id="kanbanView">
+        <!-- Urgent Column -->
+        <div class="kanban-column" id="colUrgent">
+          <div class="column-header col-urgent">
+            <span class="col-dot"></span>
+            <h3>🔴 Urgent & Closing Soon</h3>
+            <span class="badge" id="countUrgent">0</span>
+          </div>
+          <div class="cards-list" id="cardsUrgent"></div>
+        </div>
+
+        <!-- Approaching Column -->
+        <div class="kanban-column" id="colWeek">
+          <div class="column-header col-week">
+            <span class="col-dot"></span>
+            <h3>🟡 Approaching This Week</h3>
+            <span class="badge" id="countWeek">0</span>
+          </div>
+          <div class="cards-list" id="cardsWeek"></div>
+        </div>
+
+        <!-- Future Column -->
+        <div class="kanban-column" id="colFuture">
+          <div class="column-header col-future">
+            <span class="col-dot"></span>
+            <h3>🟢 Future Deadlines</h3>
+            <span class="badge" id="countFuture">0</span>
+          </div>
+          <div class="cards-list" id="cardsFuture"></div>
+        </div>
+
+        <!-- Applied Column -->
+        <div class="kanban-column" id="colApplied">
+          <div class="column-header col-applied">
+            <span class="col-dot"></span>
+            <h3>✅ Applied / Interviewing</h3>
+            <span class="badge" id="countApplied">0</span>
+          </div>
+          <div class="cards-list" id="cardsApplied"></div>
+        </div>
+      </div>
+
+      <!-- View 2: Timeline Schedule View (Hidden by default) -->
+      <div class="timeline-view" id="timelineView" style="display: none;">
+        <div class="glass-card timeline-container" id="timelineContainer"></div>
+      </div>
+
+      <!-- View 3: Table View (Hidden by default) -->
+      <div class="table-view glass-card" id="tableView" style="display: none;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Company</th>
+              <th>Role</th>
+              <th>Eligibility / CGPA</th>
+              <th>Deadline</th>
+              <th>Status</th>
+              <th>Source</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- Modal 1: Add Manual Opportunity -->
+  <div class="modal-overlay" id="addModal" style="display: none;">
+    <div class="modal-card glass-card">
+      <div class="modal-header">
+        <h2>➕ Add Internship Opportunity</h2>
+        <button class="close-modal-btn" id="closeAddModal">✕</button>
+      </div>
+      <form id="addForm" class="modal-body">
+        <div class="form-group">
+          <label>Company Name *</label>
+          <input type="text" id="addCompany" placeholder="e.g., Google, Stripe, Tesla..." required />
+        </div>
+        <div class="form-group">
+          <label>Role Title *</label>
+          <input type="text" id="addRole" placeholder="e.g., Software Engineering Intern - Summer 2026" required />
+        </div>
+        <div class="form-group">
+          <label>Eligibility & Requirements (CGPA, Batch, Criteria)</label>
+          <input type="text" id="addRequirements" placeholder="e.g., 7.5+ CGPA | 2026 Batch | CSE" />
+        </div>
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <label>Deadline Date / Time *</label>
+            <input type="text" id="addDeadline" placeholder="e.g., October 25, 2026 at 11:59 PM" required />
+          </div>
+          <div class="form-group flex-1">
+            <label>Status</label>
+            <select id="addStatus">
+              <option value="pending">⏳ Need to Apply</option>
+              <option value="applied">✅ Applied</option>
+              <option value="interviewing">💬 Interviewing</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Application / Email Link (Optional)</label>
+          <input type="url" id="addUrl" placeholder="https://..." />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" id="cancelAddBtn">Cancel</button>
+          <button type="submit" class="btn-primary">Save Opportunity</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 2: Settings & Preferences -->
+  <div class="modal-overlay" id="settingsModal" style="display: none;">
+    <div class="modal-card glass-card settings-card">
+      <div class="modal-header">
+        <h2>⚙️ Extension Settings & Mode</h2>
+        <button class="close-modal-btn" id="closeSettingsModal">✕</button>
+      </div>
+      <div class="modal-body space-y-4">
+
+        <!-- Scanning Mode -->
+        <div class="settings-section">
+          <h3>⚡ Scanning Engines</h3>
+          <div class="setting-option active-engine">
+            <div class="engine-info">
+              <strong>Zero-Setup Mode (100% Free & Automatic)</strong>
+              <small>Scans Gmail tabs automatically in your browser. Zero Google Cloud or OAuth setup needed!</small>
+            </div>
+            <span class="tag-badge green">Active</span>
+          </div>
+
+          <div class="setting-option mt-2">
+            <div class="engine-info">
+              <strong>Google Cloud API Mode (Optional 24/7 Background Polling)</strong>
+              <small>Polls inbox when browser is closed. Requires Google Cloud Client ID.</small>
+            </div>
+            <button class="btn-secondary text-xs" id="btnToggleApiSetup">Configure</button>
+          </div>
+
+          <div id="apiSetupBox" class="mt-3 p-3 bg-dark-glass rounded-lg border border-white/10" style="display: none;">
+            <label class="text-xs text-slate-300 block mb-1">Your Google OAuth Client ID:</label>
+            <div class="flex gap-2">
+              <input type="text" id="settingClientId" placeholder="xxxxxxxxxxxx.apps.googleusercontent.com" class="setting-input text-xs" />
+              <button id="btnSaveClientId" class="btn-primary text-xs">Save</button>
+            </div>
+            <small class="text-slate-400 mt-1 block">Your ID is stored locally in your browser.</small>
+          </div>
+        </div>
+
+        <!-- Target Keyword Presets -->
+        <div class="settings-section">
+          <h3>🎯 Keyword Presets (1-Click Add)</h3>
+          <div class="preset-chips">
+            <button class="chip-preset" data-kw="Software Engineer Intern">+ Software Eng</button>
+            <button class="chip-preset" data-kw="Data Science Intern">+ Data Science</button>
+            <button class="chip-preset" data-kw="Machine Learning Intern">+ AI / ML</button>
+            <button class="chip-preset" data-kw="Product Management Intern">+ Product Mgr</button>
+            <button class="chip-preset" data-kw="Quantitative Trading Intern">+ Quant / Finance</button>
+            <button class="chip-preset" data-kw="Summer 2026">+ Summer 2026</button>
+          </div>
+        </div>
+
+        <!-- Notification & Sound -->
+        <div class="settings-section">
+          <h3>🔔 Audio & Notifications</h3>
+          <div class="setting-toggle-row">
+            <span>Play Relaxing Audio Chime on New Deadline</span>
+            <label class="switch">
+              <input type="checkbox" id="settingChime" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="setting-toggle-row mt-2">
+            <span>Show Desktop Push Notifications</span>
+            <label class="switch">
+              <input type="checkbox" id="settingPushNotif" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Backup & Demo -->
+        <div class="settings-section">
+          <h3>💾 Data & Demo</h3>
+          <div class="flex gap-2">
+            <button class="btn-secondary flex-1" id="btnExportJson">📥 Export JSON</button>
+            <button class="btn-secondary flex-1" id="btnLoadDemo">🧪 Load Demo Data</button>
+            <button class="btn-danger flex-1" id="btnClearAll">🗑️ Clear All</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>
